@@ -1,0 +1,1 @@
+"""Burnout analysis backend application."""
