@@ -112,9 +112,11 @@ class DecisionTreeClassifier:
         self.target_classes: list[str] = []
 
     def fit(self, rows: list[dict[str, Any]], feature_names: list[str]) -> TreeNode:
+        """Train the tree recursively from labeled rows."""
         self.feature_names = feature_names
         labels = [str(row["Target"]) for row in rows]
         self.target_classes = sorted(set(labels))
+        # Start from all row indices; each recursive call works on a subset.
         indices = list(range(len(rows)))
         self.root = self._build_tree(rows, indices, depth=0)
         return self.root
@@ -125,12 +127,13 @@ class DecisionTreeClassifier:
         indices: list[int],
         depth: int,
     ) -> TreeNode:
+        """Recursively build one subtree from the rows referenced by indices."""
         labels = [str(rows[i]["Target"]) for i in indices]
         dist = class_distribution(labels)
         current_gini = gini_impurity(labels)
         predicted = majority_class(labels)
 
-        # Stopping: pure node, max depth, or too few samples to split
+        # Stopping rule 1: all samples in this node share one class (pure leaf).
         if len(set(labels)) == 1:
             return TreeNode(
                 node_type="leaf",
@@ -140,6 +143,7 @@ class DecisionTreeClassifier:
                 gini=current_gini,
             )
 
+        # Stopping rule 2: max depth reached or not enough samples to split further.
         if depth >= self.max_depth or len(indices) < self.min_samples_split:
             return TreeNode(
                 node_type="leaf",
@@ -149,9 +153,10 @@ class DecisionTreeClassifier:
                 gini=current_gini,
             )
 
+        # Pick the feature/threshold split with the lowest weighted child Gini.
         best_split = self._find_best_split(rows, indices)
         if best_split is None:
-            # No candidate split reduces Gini impurity - stop as a leaf.
+            # Stopping rule 3: no candidate split reduces Gini impurity.
             return TreeNode(
                 node_type="leaf",
                 samples=len(indices),
@@ -163,6 +168,7 @@ class DecisionTreeClassifier:
         left_node = self._build_tree(rows, best_split.left_indices, depth + 1)
         right_node = self._build_tree(rows, best_split.right_indices, depth + 1)
 
+        # Internal node stores the chosen split and its two child subtrees.
         return TreeNode(
             node_type="internal",
             samples=len(indices),
@@ -182,11 +188,14 @@ class DecisionTreeClassifier:
         rows: list[dict[str, Any]],
         indices: list[int],
     ) -> SplitCandidate | None:
+        """Return the best impurity-reducing split across all features, or None."""
         labels = [str(rows[i]["Target"]) for i in indices]
         parent_gini = gini_impurity(labels)
         total = len(indices)
         best: SplitCandidate | None = None
 
+        # Try every feature; keep the split with the lowest weighted child Gini
+        # that still improves on the parent node's impurity.
         for feature in self.feature_names:
             if feature in CATEGORICAL_FEATURES:
                 candidate = self._evaluate_categorical_split(rows, indices, feature, total)
@@ -216,6 +225,7 @@ class DecisionTreeClassifier:
         if len(values) <= 1:
             return None
 
+        # Optimal threshold search: test midpoints between consecutive unique values.
         thresholds = [(values[i] + values[i + 1]) / 2 for i in range(len(values) - 1)]
         best: SplitCandidate | None = None
 
@@ -258,6 +268,7 @@ class DecisionTreeClassifier:
         if len(categories) <= 1:
             return None
 
+        # Binary split per category value: left = feature == category, right = otherwise.
         best: SplitCandidate | None = None
         for category in categories:
             left_indices: list[int] = []
@@ -301,6 +312,7 @@ class DecisionTreeClassifier:
         return left_weight * gini_impurity(left_labels) + right_weight * gini_impurity(right_labels)
 
     def predict_one(self, sample: dict[str, Any]) -> tuple[str, list[str]]:
+        """Predict one sample and return the leaf class plus the decision path."""
         if self.root is None:
             raise ValueError("Tree has not been trained yet.")
         return self._traverse(self.root, sample, [])
@@ -311,6 +323,7 @@ class DecisionTreeClassifier:
         sample: dict[str, Any],
         path: list[str],
     ) -> tuple[str, list[str]]:
+        # Walk internal nodes by comparing the sample to each split condition.
         if node.node_type == "leaf":
             path.append(f"leaf: {node.predicted_class}")
             return node.predicted_class, path
@@ -318,6 +331,7 @@ class DecisionTreeClassifier:
         feature = node.feature
         assert feature is not None
 
+        # Numerical feature: route left when value <= threshold, else right.
         if node.operator == "<=":
             value = float(sample[feature])
             threshold = node.threshold
@@ -329,6 +343,7 @@ class DecisionTreeClassifier:
             path.append(f"{feature} > {threshold:g}")
             return self._traverse(node.right, sample, path) if node.right else (node.predicted_class, path)
 
+        # Categorical feature: route left on exact match, else right.
         category = node.category_value
         assert category is not None
         sample_value = str(sample[feature]).strip().upper()

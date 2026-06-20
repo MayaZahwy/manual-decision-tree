@@ -113,12 +113,12 @@ See [backend/app/sample_data_schema.md](backend/app/sample_data_schema.md) for t
 
 | Resource | URL |
 |----------|-----|
-| GitHub Repository | `https://github.com/YOUR_USERNAME/manual-decision-tree` |
+| GitHub Repository | [https://github.com/MayaZahwy/manual-decision-tree](https://github.com/MayaZahwy/manual-decision-tree) |
 | Live Frontend | `https://your-frontend.vercel.app` *(deploy when ready)* |
 | Live Backend API | `https://your-api.onrender.com` *(deploy when ready)* |
 | API Docs (Swagger) | `https://your-api.onrender.com/docs` *(after backend deploy)* |
 
-Replace the placeholder URLs above before final submission.
+Replace the deployment placeholder URLs above when you deploy the app.
 
 ## Environment Variables
 
@@ -354,7 +354,7 @@ When you are ready to deploy:
 | Backend status indicator | PASS | `checkHealth()` wired in app header | None |
 | Sample CSV in repository | PASS | `backend/data/sample_burnout.csv` | None |
 | CORS env configuration | PASS | `CORS_ORIGINS` in `main.py` | None |
-| GitHub / deployment links | PARTIAL | Placeholder URLs in README **Links** section | Replace before submission |
+| GitHub / deployment links | PARTIAL | GitHub URL set; deployment URLs still placeholders | Add live URLs when deployed |
 | Screenshots | PARTIAL | `docs/screenshots/` folder + README template | Add PNG files before submission |
 
 ## AI Collaboration Transparency
