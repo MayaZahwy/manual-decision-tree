@@ -269,14 +269,16 @@ Returns the latest trained tree JSON.
 
 ## AI Collaboration Transparency
 
-AI tools (including Cursor / Claude) were used during development for:
+AI tools, including ChatGPT, Cursor, and/or Claude, were used during the development of this project as required by the assignment.
 
-- generating the initial full-stack boilerplate
-- structuring the FastAPI routes
-- helping design the manual CART recursion
-- explaining and documenting the Gini calculation
-- improving frontend component structure
-- styling the dashboard and graph using plain CSS
-- debugging edge cases in tree traversal and prediction path generation
+AI was used for the following purposes:
 
-**Important:** No ready-made machine learning libraries (scikit-learn, TensorFlow, PyTorch, XGBoost, LightGBM, etc.) were used. The decision tree classifier is implemented manually in Python.
+- **Initial planning:** to break down the assignment requirements into backend, frontend, algorithm, dataset, and documentation tasks.
+- **Boilerplate generation:** to help create the initial FastAPI backend structure and React + TypeScript + Vite frontend structure.
+- **Algorithm support:** to help design and debug the manually implemented CART decision tree recursion, Gini impurity calculation, numerical threshold search, categorical splits, and prediction path traversal.
+- **Debugging:** to identify and fix edge cases such as empty datasets, invalid CSV values, untrained model prediction attempts, and tree traversal errors.
+- **Frontend assistance:** to help structure React components, connect the frontend to the API, and improve the interactive decision tree visualization.
+- **Styling:** to improve the dashboard layout and graph readability using plain CSS, without TailwindCSS.
+- **Documentation:** to help write and organize the README, API documentation, dataset schema, and explanation of the CART algorithm.
+
+All final code was reviewed and adjusted before submission. No ready-made machine learning libraries such as scikit-learn, TensorFlow, PyTorch, XGBoost, or LightGBM were used. The decision tree classifier is implemented manually in Python.
