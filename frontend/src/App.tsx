@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import Dashboard from "./components/Dashboard";
+import TreeVisualizer from "./components/TreeVisualizer";
 import type { TreeNode } from "./types/tree";
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
           setTrainMeta(meta);
         }}
       />
+
+      <TreeVisualizer tree={tree} />
     </div>
   );
 }
