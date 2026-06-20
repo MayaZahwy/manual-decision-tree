@@ -68,13 +68,18 @@ export default function Dashboard({ tree, onTreeUpdated }: DashboardProps) {
       <section className="panel training-panel">
         <h2>Train Model</h2>
         <p className="panel-description">
-          Upload your CSV dataset or train with the built-in fallback data.
+          Upload your CSV dataset, use the sample file at{" "}
+          <code>backend/data/sample_burnout.csv</code>, or train with the built-in fallback data.
         </p>
-        <input
-          type="file"
-          accept=".csv,text/csv"
-          onChange={(event) => setTrainFile(event.target.files?.[0] ?? null)}
-        />
+        <div className="form-field">
+          <label htmlFor="train-csv">Training CSV file</label>
+          <input
+            id="train-csv"
+            type="file"
+            accept=".csv,text/csv"
+            onChange={(event) => setTrainFile(event.target.files?.[0] ?? null)}
+          />
+        </div>
         <button
           type="button"
           className="secondary-button"

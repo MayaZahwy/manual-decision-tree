@@ -1,0 +1,26 @@
+﻿Sleep,Meetings,Weekends,Stress,Target
+8,2,NO,3,healthy
+7.5,3,NO,4,healthy
+7,4,NO,5,healthy
+8,1,NO,2,healthy
+7,3,NO,4,healthy
+7.5,2,NO,3,healthy
+6.5,4,NO,5,healthy
+6,5,NO,6,risk of burnout
+6.5,5,YES,6,risk of burnout
+6,6,YES,7,risk of burnout
+5.5,6,YES,7,risk of burnout
+6,5,YES,6,risk of burnout
+5.5,7,YES,8,vacation required
+5,8,YES,9,vacation required
+5,6,YES,7,vacation required
+4.5,7,YES,8,vacation required
+5.5,8,YES,9,vacation required
+4,9,YES,10,critical condition
+4.5,10,YES,9,critical condition
+3.5,8,YES,10,critical condition
+4,7,YES,8,critical condition
+4,9,YES,10,critical condition
+6,5,NO,6,risk of burnout
+5,6,YES,7,vacation required
+4,7,YES,8,critical condition

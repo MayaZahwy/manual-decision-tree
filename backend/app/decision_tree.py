@@ -153,6 +153,7 @@ class DecisionTreeClassifier:
 
         best_split = self._find_best_split(rows, indices)
         if best_split is None:
+            # No candidate split reduces Gini impurity ÔÇö stop as a leaf.
             return TreeNode(
                 node_type="leaf",
                 samples=len(indices),
@@ -197,7 +198,7 @@ class DecisionTreeClassifier:
             if candidate is None:
                 continue
 
-            # Require impurity reduction
+            # Keep only splits that strictly reduce parent impurity.
             if candidate.weighted_gini >= parent_gini:
                 continue
 
@@ -229,6 +230,7 @@ class DecisionTreeClassifier:
                 else:
                     right_indices.append(idx)
 
+            # Skip degenerate splits that send all samples to one side.
             if not left_indices or not right_indices:
                 continue
 

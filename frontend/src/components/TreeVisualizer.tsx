@@ -12,7 +12,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import type { TreeNode } from "../types/tree";
-import { severityClass } from "../types/tree";
+import { formatTargetLabel, severityClass } from "../types/tree";
 
 interface TreeVisualizerProps {
   tree: TreeNode | null;
@@ -33,7 +33,7 @@ const VERTICAL_GAP = 140;
 
 function formatSplit(node: TreeNode): string {
   if (node.type === "leaf") {
-    return node.predicted_class;
+    return formatTargetLabel(node.predicted_class);
   }
   if (node.operator === "<=" && node.feature && node.threshold != null) {
     return `${node.feature} <= ${node.threshold}`;
@@ -46,7 +46,7 @@ function formatSplit(node: TreeNode): string {
 
 function distributionText(distribution: Record<string, number>): string {
   return Object.entries(distribution)
-    .map(([label, count]) => `${label}: ${count}`)
+    .map(([label, count]) => `${formatTargetLabel(label)}: ${count}`)
     .join(", ");
 }
 
@@ -138,7 +138,8 @@ function TreeFlowNode({ data }: NodeProps<Node<TreeNodeData>>) {
       <div className="tree-node-label">{data.label}</div>
       <div className="tree-node-meta">{isLeaf ? "Leaf" : "Split"} ┬À n={data.samples}</div>
       <div className="tree-node-tooltip">
-        <strong>{isLeaf ? "Predicted class" : "Majority class"}:</strong> {data.predictedClass}
+        <strong>{isLeaf ? "Predicted class" : "Majority class"}:</strong>{" "}
+        {formatTargetLabel(data.predictedClass)}
         <br />
         <strong>Samples:</strong> {data.samples}
         <br />

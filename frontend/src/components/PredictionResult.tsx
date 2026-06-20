@@ -1,4 +1,4 @@
-﻿import { severityClass } from "../types/tree";
+﻿import { severityClass, formatTargetLabel } from "../types/tree";
 
 interface PredictionResultProps {
   prediction: string | null;
@@ -18,7 +18,9 @@ export default function PredictionResult({ prediction, path }: PredictionResultP
   return (
     <section className="prediction-result">
       <h2>Prediction</h2>
-      <p className={`prediction-badge ${severityClass(prediction)}`}>{prediction}</p>
+      <p className={`prediction-badge ${severityClass(prediction)}`}>
+        {formatTargetLabel(prediction)}
+      </p>
 
       <h3>Decision path</h3>
       <ol className="decision-path">

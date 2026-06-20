@@ -58,3 +58,15 @@ export const SEVERITY_CLASSES: Record<string, string> = {
 export function severityClass(label: string): string {
   return SEVERITY_CLASSES[label] ?? "severity-unknown";
 }
+
+/** Title-case display labels for burnout target classes. */
+export const TARGET_LABELS: Record<string, string> = {
+  healthy: "Healthy",
+  "risk of burnout": "Risk of burnout",
+  "vacation required": "Vacation required",
+  "critical condition": "Critical condition",
+};
+
+export function formatTargetLabel(label: string): string {
+  return TARGET_LABELS[label] ?? label;
+}

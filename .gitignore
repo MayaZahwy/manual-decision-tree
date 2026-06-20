@@ -1,4 +1,4 @@
-# Python
+﻿# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -29,4 +29,4 @@ Thumbs.db
 
 # Data (user-created datasets)
 *.csv
-!backend/app/sample_data_schema.md
+!backend/data/sample_burnout.csv

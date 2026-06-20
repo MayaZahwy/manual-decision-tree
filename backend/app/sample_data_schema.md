@@ -28,3 +28,5 @@ Sleep,Meetings,Weekends,Stress,Target
 ```
 
 Create your own CSV file with this format and upload it via `POST /train` or the dashboard **Train Model** section.
+
+A sample dataset with 25 rows is committed at [backend/data/sample_burnout.csv](../data/sample_burnout.csv).

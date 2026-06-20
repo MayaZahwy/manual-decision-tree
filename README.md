@@ -21,6 +21,8 @@ backend/
     decision_tree.py     # Manual CART implementation
     dataset_loader.py    # CSV parsing and validation
     sample_data_schema.md
+  data/
+    sample_burnout.csv   # Sample training dataset (25 rows)
   requirements.txt
 
 frontend/
@@ -103,7 +105,56 @@ Sleep,Meetings,Weekends,Stress,Target
 
 Upload your CSV via the dashboard **Train Model** section or `POST /train`. If no file is uploaded, the API uses a small built-in fallback dataset for demonstration only.
 
+A ready-made sample file is included at [backend/data/sample_burnout.csv](backend/data/sample_burnout.csv) (25 rows, all four target classes).
+
 See [backend/app/sample_data_schema.md](backend/app/sample_data_schema.md) for the schema reference.
+
+## Links
+
+| Resource | URL |
+|----------|-----|
+| GitHub Repository | `https://github.com/YOUR_USERNAME/lotos-assignment` |
+| Live Frontend | `https://your-frontend.vercel.app` *(deploy when ready)* |
+| Live Backend API | `https://your-api.onrender.com` *(deploy when ready)* |
+| API Docs (Swagger) | `https://your-api.onrender.com/docs` *(after backend deploy)* |
+
+Replace the placeholder URLs above before final submission.
+
+## Environment Variables
+
+| Variable | Where | Description |
+|----------|-------|-------------|
+| `VITE_API_URL` | Frontend (build time) | Backend base URL for production builds, e.g. `https://your-api.onrender.com`. Omit for local dev ÔÇö Vite proxies `/api` to `http://127.0.0.1:8000`. |
+| `CORS_ORIGINS` | Backend (runtime) | Comma-separated allowed browser origins. Default: `http://localhost:5173,http://127.0.0.1:5173`. Add your deployed frontend URL when you deploy. |
+
+Example backend `.env` (optional, for local testing with a custom frontend port):
+
+```env
+CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+```
+
+## Screenshots
+
+Add screenshots to [docs/screenshots/](docs/screenshots/) and uncomment the lines below when ready:
+
+<!--
+### Dashboard & Developer Profile
+![Dashboard](./docs/screenshots/dashboard.png)
+
+### Prediction & Decision Path
+![Prediction result](./docs/screenshots/prediction.png)
+
+### Interactive Decision Tree
+![Decision tree visualization](./docs/screenshots/tree.png)
+-->
+
+Until screenshots are added, run the app locally:
+
+1. Start the backend (`uvicorn app.main:app --reload --host 127.0.0.1 --port 8000`).
+2. Start the frontend (`npm run dev`).
+3. Click **Train Model** (optionally upload `backend/data/sample_burnout.csv`).
+4. Adjust sliders and click **Predict Burnout Level** to see the verdict and path.
+5. Scroll to the **Decision Tree** panel ÔÇö hover nodes for sample counts and Gini values.
 
 ## Algorithm: CART Decision Tree with Gini Impurity
 
@@ -261,11 +312,14 @@ Returns the latest trained tree JSON.
 | Deployment-ready structure | Separate backend/frontend, env-based API URL, proxy in Vite |
 | README + AI transparency | This document |
 
-## Deployment Notes (future)
+## Deployment Notes
 
-- **Backend (Render)**: run `uvicorn app.main:app --host 0.0.0.0 --port $PORT` from `backend/`
-- **Frontend (Vercel)**: set `VITE_API_URL` to the Render backend URL and build `frontend/`
-- Update CORS `allow_origins` in `main.py` with production frontend URLs
+When you are ready to deploy:
+
+- **Backend (Render / Railway / Fly.io)**: run `uvicorn app.main:app --host 0.0.0.0 --port $PORT` from `backend/`
+- **Frontend (Vercel / Netlify / Cloudflare Pages)**: set `VITE_API_URL` to the deployed backend URL, then `npm run build`
+- Set backend `CORS_ORIGINS` to include your production frontend URL(s)
+- Update the **Links** section above with live URLs
 
 ## Pre-Submission Audit Checklist
 
@@ -296,8 +350,12 @@ Returns the latest trained tree JSON.
 | README + API docs + algorithm | PASS | This document | None |
 | AI transparency (when/how/why) | PASS | Section below | None |
 | Deployment notes | PASS | Deployment Notes section | None |
-| Frontend uses `GET /tree` | PARTIAL | Tree returned via `POST /train`; `fetchTree()` exists but unused | Optional ÔÇö endpoint works independently |
-| Automated tests | PARTIAL | Manual/API smoke tests only | Optional ÔÇö not required by assignment |
+| Frontend uses `GET /tree` | PASS | Restored on page load via `fetchTree()` in `App.tsx`; also available after train | None |
+| Backend status indicator | PASS | `checkHealth()` wired in app header | None |
+| Sample CSV in repository | PASS | `backend/data/sample_burnout.csv` | None |
+| CORS env configuration | PASS | `CORS_ORIGINS` in `main.py` | None |
+| GitHub / deployment links | PARTIAL | Placeholder URLs in README **Links** section | Replace before submission |
+| Screenshots | PARTIAL | `docs/screenshots/` folder + README template | Add PNG files before submission |
 
 ## AI Collaboration Transparency
 
