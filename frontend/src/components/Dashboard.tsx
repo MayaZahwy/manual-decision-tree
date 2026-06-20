@@ -86,7 +86,7 @@ export default function Dashboard({ tree, onTreeUpdated }: DashboardProps) {
           onClick={() => void handleTrain()}
           disabled={trainLoading}
         >
-          {trainLoading ? "TrainingÔÇª" : "Train Model"}
+          {trainLoading ? "Training..." : "Train Model"}
         </button>
         {trainInfo && <p className="info-text">{trainInfo}</p>}
       </section>

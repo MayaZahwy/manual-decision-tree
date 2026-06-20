@@ -101,7 +101,7 @@ export default function BurnoutForm({
 
       <div className="form-field">
         <label htmlFor="stress">
-          Stress level (1ÔÇô10): <strong>{values.stress}</strong>
+          Stress level (1-10): <strong>{values.stress}</strong>
         </label>
         <input
           id="stress"
@@ -115,7 +115,7 @@ export default function BurnoutForm({
       </div>
 
       <button type="submit" className="primary-button" disabled={disabled || loading}>
-        {loading ? "PredictingÔÇª" : "Predict Burnout Level"}
+        {loading ? "Predicting..." : "Predict Burnout Level"}
       </button>
     </form>
   );

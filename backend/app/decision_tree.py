@@ -8,8 +8,6 @@ from typing import Any
 
 
 CATEGORICAL_FEATURES = {"Weekends"}
-NUMERICAL_FEATURES = {"Sleep", "Meetings", "Stress"}
-FEATURE_ORDER = ["Sleep", "Meetings", "Weekends", "Stress"]
 
 
 def gini_impurity(labels: list[str]) -> float:
@@ -100,7 +98,7 @@ class SplitCandidate:
 
 
 class DecisionTreeClassifier:
-    """CART classifier with Gini impurity ÔÇö no external ML libraries."""
+    """CART classifier with Gini impurity - no external ML libraries."""
 
     def __init__(
         self,
@@ -153,7 +151,7 @@ class DecisionTreeClassifier:
 
         best_split = self._find_best_split(rows, indices)
         if best_split is None:
-            # No candidate split reduces Gini impurity ÔÇö stop as a leaf.
+            # No candidate split reduces Gini impurity - stop as a leaf.
             return TreeNode(
                 node_type="leaf",
                 samples=len(indices),

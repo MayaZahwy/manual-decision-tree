@@ -136,7 +136,7 @@ function TreeFlowNode({ data }: NodeProps<Node<TreeNodeData>>) {
     <div className={`tree-node ${isLeaf ? data.severityClassName : "tree-node-internal"}`}>
       <Handle type="target" position={Position.Top} />
       <div className="tree-node-label">{data.label}</div>
-      <div className="tree-node-meta">{isLeaf ? "Leaf" : "Split"} ┬À n={data.samples}</div>
+      <div className="tree-node-meta">{isLeaf ? "Leaf" : "Split"}, n={data.samples}</div>
       <div className="tree-node-tooltip">
         <strong>{isLeaf ? "Predicted class" : "Majority class"}:</strong>{" "}
         {formatTargetLabel(data.predictedClass)}

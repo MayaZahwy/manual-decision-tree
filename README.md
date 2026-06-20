@@ -82,7 +82,7 @@ Create a UTF-8 CSV file with these columns:
 | `Sleep` | number | Average sleep hours per night |
 | `Meetings` | number | Calls or meetings per day |
 | `Weekends` | YES/NO | Whether the developer works on weekends |
-| `Stress` | number | Subjective stress level (1ÔÇô10) |
+| `Stress` | number | Subjective stress level (1-10) |
 | `Target` | text | Burnout class label |
 
 ### Allowed `Target` values
@@ -113,7 +113,7 @@ See [backend/app/sample_data_schema.md](backend/app/sample_data_schema.md) for t
 
 | Resource | URL |
 |----------|-----|
-| GitHub Repository | `https://github.com/YOUR_USERNAME/lotos-assignment` |
+| GitHub Repository | `https://github.com/YOUR_USERNAME/manual-decision-tree` |
 | Live Frontend | `https://your-frontend.vercel.app` *(deploy when ready)* |
 | Live Backend API | `https://your-api.onrender.com` *(deploy when ready)* |
 | API Docs (Swagger) | `https://your-api.onrender.com/docs` *(after backend deploy)* |
@@ -124,7 +124,7 @@ Replace the placeholder URLs above before final submission.
 
 | Variable | Where | Description |
 |----------|-------|-------------|
-| `VITE_API_URL` | Frontend (build time) | Backend base URL for production builds, e.g. `https://your-api.onrender.com`. Omit for local dev ÔÇö Vite proxies `/api` to `http://127.0.0.1:8000`. |
+| `VITE_API_URL` | Frontend (build time) | Backend base URL for production builds, e.g. `https://your-api.onrender.com`. Omit for local dev - Vite proxies `/api` to `http://127.0.0.1:8000`. |
 | `CORS_ORIGINS` | Backend (runtime) | Comma-separated allowed browser origins. Default: `http://localhost:5173,http://127.0.0.1:5173`. Add your deployed frontend URL when you deploy. |
 
 Example backend `.env` (optional, for local testing with a custom frontend port):
@@ -154,7 +154,7 @@ Until screenshots are added, run the app locally:
 2. Start the frontend (`npm run dev`).
 3. Click **Train Model** (optionally upload `backend/data/sample_burnout.csv`).
 4. Adjust sliders and click **Predict Burnout Level** to see the verdict and path.
-5. Scroll to the **Decision Tree** panel ÔÇö hover nodes for sample counts and Gini values.
+5. Scroll to the **Decision Tree** panel - hover nodes for sample counts and Gini values.
 
 ## Algorithm: CART Decision Tree with Gini Impurity
 
@@ -183,10 +183,10 @@ A split is scored by the **weighted average Gini** of its left and right child n
 
 Recursion stops when any of the following is true:
 
-1. **Pure node** ÔÇö all samples share one class
+1. **Pure node** - all samples share one class
 2. **`max_depth`** reached (default: 8)
 3. **`min_samples_split`** not met (default: 2)
-4. **No useful split** ÔÇö no candidate reduces Gini impurity
+4. **No useful split** - no candidate reduces Gini impurity
 
 ### Node statistics stored in JSON
 
@@ -275,7 +275,7 @@ Returns the latest trained tree JSON.
 ## Frontend Features
 
 - **Train Model** panel with CSV upload or fallback training
-- **Developer Profile** form with sliders/inputs for Sleep, Meetings, Stress (1ÔÇô10), and Weekends (YES/NO radio buttons)
+- **Developer Profile** form with sliders/inputs for Sleep, Meetings, Stress (1-10), and Weekends (YES/NO radio buttons)
 - **Predict** button with instant burnout level result
 - **Decision path** list showing each split taken through the tree
 - **Interactive decision tree** (React Flow):
@@ -316,8 +316,8 @@ Returns the latest trained tree JSON.
 
 When you are ready to deploy:
 
-- **Backend (Render / Railway / Fly.io)**: run `uvicorn app.main:app --host 0.0.0.0 --port $PORT` from `backend/`
-- **Frontend (Vercel / Netlify / Cloudflare Pages)**: set `VITE_API_URL` to the deployed backend URL, then `npm run build`
+- **Backend (Render / Railway / Fly.io)**: use `backend/Procfile` or run `uvicorn app.main:app --host 0.0.0.0 --port $PORT` from `backend/`. Copy `backend/.env.example` to `.env` and set `CORS_ORIGINS`.
+- **Frontend (Vercel / Netlify / Cloudflare Pages)**: copy `frontend/.env.example` to `.env.production`, set `VITE_API_URL` to the deployed backend URL, then `npm run build`
 - Set backend `CORS_ORIGINS` to include your production frontend URL(s)
 - Update the **Links** section above with live URLs
 

@@ -25,7 +25,7 @@ function App() {
             setTrainMeta({ rows: existingTree.samples, message: "Model loaded from backend." });
           }
         } catch {
-          // No trained model yet ÔÇö Dashboard will train on first load.
+          // No trained model yet - Dashboard will train on first load.
         }
       } catch {
         if (!cancelled) setBackendStatus("offline");
@@ -42,7 +42,7 @@ function App() {
     <div className="app-shell">
       <header className="app-header">
         <div>
-          <p className="eyebrow">Home Assignment ┬À Manual CART Decision Tree</p>
+          <p className="eyebrow">Home Assignment - Manual CART Decision Tree</p>
           <h1>Developer Burnout Analysis</h1>
           <p className="subtitle">
             Predict burnout levels and explore the decision path through an interactive tree.
@@ -50,7 +50,7 @@ function App() {
         </div>
         <div className="header-side">
           <span className={`backend-status backend-status-${backendStatus}`}>
-            Backend: {backendStatus === "checking" ? "connectingÔÇª" : backendStatus}
+            Backend: {backendStatus === "checking" ? "connecting..." : backendStatus}
           </span>
           {trainMeta && (
             <div className="header-meta">
