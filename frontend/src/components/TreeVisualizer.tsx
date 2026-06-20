@@ -100,19 +100,22 @@ function layoutTree(
     },
   };
 
+  const leftLabel = node.operator === "==" ? "yes" : "<=";
+  const rightLabel = node.operator === "==" ? "no" : ">";
+
   const edges: Edge[] = [
     {
       id: `${nodeId}-left`,
       source: nodeId,
       target: leftLayout.nodes[0].id,
-      label: "yes / <=",
+      label: leftLabel,
       type: "smoothstep",
     },
     {
       id: `${nodeId}-right`,
       source: nodeId,
       target: rightLayout.nodes[0].id,
-      label: "no / >",
+      label: rightLabel,
       type: "smoothstep",
     },
     ...leftLayout.edges,

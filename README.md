@@ -267,9 +267,43 @@ Returns the latest trained tree JSON.
 - **Frontend (Vercel)**: set `VITE_API_URL` to the Render backend URL and build `frontend/`
 - Update CORS `allow_origins` in `main.py` with production frontend URLs
 
+## Pre-Submission Audit Checklist
+
+| Requirement | Status | Evidence | Fix needed |
+|-------------|--------|----------|------------|
+| Python FastAPI backend | PASS | `backend/app/main.py` | None |
+| `GET /health` | PASS | `health()` in `main.py` | None |
+| `POST /train` (CSV upload + fallback) | PASS | `train()` + `dataset_loader.py` | None |
+| `POST /predict` with decision path | PASS | `predict()` + `DecisionTreeClassifier.predict_one()` | None |
+| `GET /tree` | PASS | `get_tree()` in `main.py` | None |
+| CORS for local frontend | PASS | `CORSMiddleware` in `main.py` | None |
+| Clear error handling | PASS | `HTTPException`, `DatasetError` | None |
+| Manual decision tree (no ML libs) | PASS | `decision_tree.py`, `requirements.txt` | None |
+| Gini impurity splitting | PASS | `gini_impurity()`, `_weighted_gini()` | None |
+| Numerical threshold splits | PASS | `_evaluate_numerical_split()` | None |
+| Categorical YES/NO splits | PASS | `_evaluate_categorical_split()` | None |
+| Stopping rules | PASS | `_build_tree()` pure/max_depth/min_samples/no split | None |
+| CSV format documented | PASS | `README.md`, `sample_data_schema.md` | None |
+| Model learns from Target column | PASS | `fit()` uses `row["Target"]` labels | None |
+| Fallback only without upload | PASS | `train()` file check | None |
+| React + TypeScript frontend | PASS | `frontend/src/*.tsx` | None |
+| All profile inputs | PASS | `BurnoutForm.tsx` | None |
+| Train + predict UI | PASS | `Dashboard.tsx` | None |
+| Decision path display | PASS | `PredictionResult.tsx` | None |
+| Interactive tree graph | PASS | `TreeVisualizer.tsx` | None |
+| Node metadata on hover | PASS | `.tree-node-tooltip` in `TreeVisualizer.tsx` | None |
+| Plain CSS (no Tailwind) | PASS | `styles.css` | None |
+| README + API docs + algorithm | PASS | This document | None |
+| AI transparency (when/how/why) | PASS | Section below | None |
+| Deployment notes | PASS | Deployment Notes section | None |
+| Frontend uses `GET /tree` | PARTIAL | Tree returned via `POST /train`; `fetchTree()` exists but unused | Optional ÔÇö endpoint works independently |
+| Automated tests | PARTIAL | Manual/API smoke tests only | Optional ÔÇö not required by assignment |
+
 ## AI Collaboration Transparency
 
 AI tools, including ChatGPT, Cursor, and/or Claude, were used during the development of this project as required by the assignment.
+
+**Why AI was used:** to speed up boilerplate setup, clarify algorithm design choices, catch edge-case bugs faster, and produce clearer documentation while keeping the decision tree implementation manual and reviewable.
 
 AI was used for the following purposes:
 
