@@ -2,6 +2,7 @@
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.dataset_loader import (
+    ALLOWED_WEEKENDS,
     FEATURE_COLUMNS,
     DatasetError,
     get_fallback_dataset,
@@ -61,3 +62,43 @@ async def train(file: UploadFile | None = File(default=None)) -> TrainResponse:
         target_classes=target_classes,
         tree=tree_json,
     )
+
+
+@app.post("/predict", response_model=PredictResponse)
+def predict(payload: PredictRequest) -> PredictResponse:
+    if classifier.root is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Model has not been trained yet. Call POST /train first.",
+        )
+
+    weekends = payload.Weekends.strip().upper()
+    if weekends not in ALLOWED_WEEKENDS:
+        raise HTTPException(
+            status_code=400,
+            detail="Weekends must be YES or NO.",
+        )
+
+    sample = {
+        "Sleep": payload.Sleep,
+        "Meetings": payload.Meetings,
+        "Weekends": weekends,
+        "Stress": payload.Stress,
+    }
+
+    try:
+        prediction, path = classifier.predict_one(sample)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    return PredictResponse(prediction=prediction, path=path)
+
+
+@app.get("/tree")
+def get_tree() -> dict:
+    if classifier.root is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Model has not been trained yet. Call POST /train first.",
+        )
+    return classifier.to_json()
