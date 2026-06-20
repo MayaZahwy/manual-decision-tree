@@ -135,9 +135,6 @@ CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 
 ## Screenshots
 
-Add screenshots to [docs/screenshots/](docs/screenshots/) and uncomment the lines below when ready:
-
-<!--
 ### Dashboard & Developer Profile
 ![Dashboard](./docs/screenshots/dashboard.png)
 
@@ -146,15 +143,6 @@ Add screenshots to [docs/screenshots/](docs/screenshots/) and uncomment the line
 
 ### Interactive Decision Tree
 ![Decision tree visualization](./docs/screenshots/tree.png)
--->
-
-Until screenshots are added, run the app locally:
-
-1. Start the backend (`uvicorn app.main:app --reload --host 127.0.0.1 --port 8000`).
-2. Start the frontend (`npm run dev`).
-3. Click **Train Model** (optionally upload `backend/data/sample_burnout.csv`).
-4. Adjust sliders and click **Predict Burnout Level** to see the verdict and path.
-5. Scroll to the **Decision Tree** panel - hover nodes for sample counts and Gini values.
 
 ## Algorithm: CART Decision Tree with Gini Impurity
 
@@ -355,7 +343,7 @@ When you are ready to deploy:
 | Sample CSV in repository | PASS | `backend/data/sample_burnout.csv` | None |
 | CORS env configuration | PASS | `CORS_ORIGINS` in `main.py` | None |
 | GitHub / deployment links | PARTIAL | GitHub URL set; deployment URLs still placeholders | Add live URLs when deployed |
-| Screenshots | PARTIAL | `docs/screenshots/` folder + README template | Add PNG files before submission |
+| Screenshots | PASS | `docs/screenshots/` PNG files linked in README | None |
 
 ## AI Collaboration Transparency
 
