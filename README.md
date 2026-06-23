@@ -114,18 +114,16 @@ See [backend/app/sample_data_schema.md](backend/app/sample_data_schema.md) for t
 | Resource | URL |
 |----------|-----|
 | GitHub Repository | [https://github.com/MayaZahwy/manual-decision-tree](https://github.com/MayaZahwy/manual-decision-tree) |
-| Live Frontend | `https://your-frontend.vercel.app` *(deploy when ready)* |
-| Live Backend API | `https://your-api.onrender.com` *(deploy when ready)* |
-| API Docs (Swagger) | `https://your-api.onrender.com/docs` *(after backend deploy)* |
-
-Replace the deployment placeholder URLs above when you deploy the app.
+| Live Frontend | [https://manual-decision-tree.vercel.app](https://manual-decision-tree.vercel.app) |
+| Live Backend API | [https://manual-decision-tree.onrender.com](https://manual-decision-tree.onrender.com) |
+| API Docs (Swagger) | [https://manual-decision-tree.onrender.com/docs](https://manual-decision-tree.onrender.com/docs) |
 
 ## Environment Variables
 
 | Variable | Where | Description |
 |----------|-------|-------------|
-| `VITE_API_URL` | Frontend (build time) | Backend base URL for production builds, e.g. `https://your-api.onrender.com`. Omit for local dev - Vite proxies `/api` to `http://127.0.0.1:8000`. |
-| `CORS_ORIGINS` | Backend (runtime) | Comma-separated allowed browser origins. Default: `http://localhost:5173,http://127.0.0.1:5173`. Add your deployed frontend URL when you deploy. |
+| `VITE_API_URL` | Frontend (build time) | Backend base URL for production builds, e.g. `https://manual-decision-tree.onrender.com`. Omit for local dev - Vite proxies `/api` to `http://127.0.0.1:8000`. |
+| `CORS_ORIGINS` | Backend (runtime) | Comma-separated allowed browser origins. Default: `http://localhost:5173,http://127.0.0.1:5173`. Production includes `https://manual-decision-tree.vercel.app`. |
 
 Example backend `.env` (optional, for local testing with a custom frontend port):
 
@@ -342,7 +340,7 @@ When you are ready to deploy:
 | Backend status indicator | PASS | `checkHealth()` wired in app header | None |
 | Sample CSV in repository | PASS | `backend/data/sample_burnout.csv` | None |
 | CORS env configuration | PASS | `CORS_ORIGINS` in `main.py` | None |
-| GitHub / deployment links | PARTIAL | GitHub URL set; deployment URLs still placeholders | Add live URLs when deployed |
+| GitHub / deployment links | PASS | GitHub, Vercel, and Render URLs in Links section | None |
 | Screenshots | PASS | `docs/screenshots/` PNG files linked in README | None |
 
 ## AI Collaboration Transparency
