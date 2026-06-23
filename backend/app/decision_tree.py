@@ -21,10 +21,12 @@ def gini_impurity(labels: list[str]) -> float:
 
 
 def majority_class(labels: list[str]) -> str:
+    """Returns the most frequent label"""
     return Counter(labels).most_common(1)[0][0]
 
 
 def class_distribution(labels: list[str]) -> dict[str, int]:
+    """Maps class name → count"""
     return dict(Counter(labels))
 
 
@@ -315,7 +317,8 @@ class DecisionTreeClassifier:
         """Predict one sample and return the leaf class plus the decision path."""
         if self.root is None:
             raise ValueError("Tree has not been trained yet.")
-        return self._traverse(self.root, sample, [])
+        """The user can see not only the result, but also how the model reached it."""
+        return self._traverse(self.root, sample, []) 
 
     def _traverse(
         self,
