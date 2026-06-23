@@ -26,6 +26,7 @@ Thumbs.db
 # Environment
 .env
 .env.local
+.env.production
 
 # Data (user-created datasets)
 *.csv
